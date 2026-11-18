@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>试展跨场评分校准台</title>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <h1>试展跨场评分校准台</h1>
+  <p class="subtitle">共有展品锚点校准 · 连通分榜 · 闭环隔离 · 留一锚点稳定性 · 冻结恢复</p>
+</header>
+
+<main class="layout">
+  <section class="panel" id="panel-create">
+    <h2>① 发起研究（受理即冻结）</h2>
+    <div class="row">
+      <label>闭环容差（分数单位）
+        <input type="number" id="input-tolerance" step="0.05" value="0.5" min="0" />
+      </label>
+      <label>锚点方式
+        <select id="input-anchor-mode">
+          <option value="auto">自动：全部共有展品</option>
+          <option value="explicit">显式指定（JSON 数组）</option>
+        </select>
+      </label>
+    </div>
+    <label>场次 sessions（JSON：id/name）</label>
+    <textarea id="input-sessions" rows="6" spellcheck="false"></textarea>
+    <label>评分 observations（JSON：session_id/exhibit_id/score）</label>
+    <textarea id="input-observations" rows="10" spellcheck="false"></textarea>
+    <label id="wrap-explicit" class="hidden">显式锚点 exhibit_id 数组
+      <textarea id="input-anchors" rows="2" spellcheck="false"></textarea>
+    </label>
+    <div class="row actions">
+      <button id="btn-demo" type="button">填入演示数据</button>
+      <button id="btn-submit" type="button" class="primary">冻结并受理</button>
+    </div>
+    <p id="create-msg" class="msg"></p>
+  </section>
+
+  <section class="panel" id="panel-list">
+    <h2>② 同批研究（点击查看排名与依据）</h2>
+    <table class="grid">
+      <thead><tr>
+        <th>研究</th><th>状态</th><th>检查点</th><th>容差</th>
+        <th>输入 SHA256</th><th>创建时间</th>
+      </tr></thead>
+      <tbody id="study-rows"><tr><td colspan="6" class="muted">加载中…</td></tr></tbody>
+    </table>
+  </section>
+
+  <section class="panel hidden" id="panel-detail">
+    <div class="detail-head">
+      <h2>③ 研究详情 <span id="d-id" class="mono"></span></h2>
+      <button id="btn-back" type="button">返回列表</button>
+    </div>
+    <div id="detail-meta" class="meta"></div>
+
+    <h3>检查点与审计事件</h3>
+    <ol id="event-list" class="events"></ol>
+
+    <h3>连通分量与榜单</h3>
+    <div id="components"></div>
+
+    <h3>留一锚点稳定性</h3>
+    <div id="stability"></div>
+  </section>
+</main>
+
+<script src="/app.js"></script>
+</body>
+</html>
